@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import {
   Row,
   Col,
@@ -10,10 +10,22 @@ import {
   ListGroupItem,
 } from "react-bootstrap";
 import Rating from "../components/Rating";
-import products from "../products";
+import axios from "axios";
 
 const ProductScreen = ({ match }) => {
-  const product = products.find((p) => p._id === match.params.id);
+  const { id } = useParams();
+  const [product, setProduct] = useState({});
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      // id에 맞게 상세 페이지 match
+      const { data } = await axios.get(`/api/products/${id}`);
+
+      setProduct(data);
+    };
+    fetchProduct();
+  }, []);
+
   return (
     <div>
       <Link className="btn btn-light my-3" to="/">
