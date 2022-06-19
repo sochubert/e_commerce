@@ -21,7 +21,7 @@ const OrderScreen = ({ match }) => {
 
   useEffect(() => {
     dispatch(getOrderDetails(orderId));
-  }, []);
+  }, [dispatch, orderId]);
 
   useEffect(() => {
     if (!order || order._id !== orderId) {
